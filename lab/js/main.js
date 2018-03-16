@@ -124,13 +124,35 @@ the week was the most common for garbage removal? Update the original state
 of the application to report this information.
 
 ===================== */
+//task1
+var dataset = "https://raw.githubusercontent.com/CPLN-692-401/datasets/master/geojson/philadelphia-garbage-collection-boundaries.geojson";
 
-var dataset = ""
-var featureGroup;
-
-var myStyle = function(feature) {
-  return {};
-};
+//task2
+function getColor(d) {
+    return d == "MON" ? '#800026' :
+           d == "TUE" ? '#BD0026' :
+           d == "WED" ? '#E31A1C' :
+           d == "THU" ? '#FC4E2A' :
+           d == "FRI" ? '#FD8D3C' :
+           d == "SAT" ? '#FEB24C' :
+           d == "SUN" ? '#FED976' :
+           '#60605d';
+}
+function myStyle(feature) {
+    return {
+        fillColor: getColor(feature.properties.COLLDAY),
+        weight: 2,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+//task3
+var myFilter = function(feature) {
+  if(feature.properties.COLLDAY !== " "){return true;}
+  else {return true}
+;}
 
 var showResults = function() {
   /* =====================
@@ -143,6 +165,7 @@ var showResults = function() {
   $('#intro').hide();
   // => <div id="results">
   $('#results').show();
+    //document.getElementsByClassName('day-of-week')[0].innerHTML = day();
 };
 
 
@@ -153,13 +176,18 @@ var eachFeatureFunction = function(layer) {
     Check out layer.feature to see some useful data about the layer that
     you can use in your application.
     ===================== */
+    var weekday;
+    if(layer.feature.properties.COLLDAY == "MON") {weekday = "Monday";}
+    if(layer.feature.properties.COLLDAY == "TUE") {weekday = "Tuesday";}
+    if(layer.feature.properties.COLLDAY == "WED") {weekday = "Wednesday";}
+    if(layer.feature.properties.COLLDAY == "THU") {weekday = "Thursday";}
+    if(layer.feature.properties.COLLDAY == "FRI") {weekday = "Friday";}
+    if(layer.feature.properties.COLLDAY == "SAT") {weekday = "Saturday";}
+    if(layer.feature.properties.COLLDAY == "SUN") {weekday = "Sunday";}
+    document.getElementsByClassName('day-of-week')[0].innerHTML = weekday;
     console.log(layer.feature);
     showResults();
   });
-};
-
-var myFilter = function(feature) {
-  return true;
 };
 
 $(document).ready(function() {

@@ -69,7 +69,7 @@ var parseData = function(res) {
       return {
         data: group,
         features: L.featureGroup(markerArray)
-          .on('click', function() {  // Bind a function onto any click on this `featureGroup`
+          .on('click', function() {  // Bind a function onto any click on this `featureGroup`,you can click on the markers
             map.fitBounds(this.getBounds(), fitBoundsOptions);
           })
       };
@@ -119,7 +119,7 @@ var onStringFilterChange = function(e) {
   filterAndPlot();
 };
 
-var onSelectChange = function() {
+var onSelectChange = function(e) {
   selectValue = e.target.value;
   filterAndPlot();
 };
